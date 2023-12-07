@@ -1,0 +1,6 @@
+bin/**
+**/config.yaml
+
+# Others
+.DS_Store
+.vscode/**
