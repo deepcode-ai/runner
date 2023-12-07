@@ -33,7 +33,7 @@ type Facade struct {
 
 type Opts struct {
 	Runner        *model.Runner
-	DeepSource    *model.DeepSource
+	DeepCode    *model.DeepCode
 	Apps          map[string]*oauth.App
 	SAML          *saml.Opts
 	Store         store.Store
@@ -53,8 +53,8 @@ func New(ctx context.Context, opts *Opts, client *http.Client) (*Facade, error) 
 		client = http.DefaultClient
 	}
 
-	deepsourceVerifier := jwtutil.NewVerifier(opts.DeepSource.PublicKey)
-	tokenMiddleware := DeepSourceTokenMiddleware(opts.Runner.ID, deepsourceVerifier)
+	deepcodeVerifier := jwtutil.NewVerifier(opts.DeepCode.PublicKey)
+	tokenMiddleware := DeepCodeTokenMiddleware(opts.Runner.ID, deepcodeVerifier)
 
 	// Initialize token service and handlers
 	runnerSigner := jwtutil.NewSigner(opts.Runner.PrivateKey)
@@ -70,12 +70,12 @@ func New(ctx context.Context, opts *Opts, client *http.Client) (*Facade, error) 
 		if err != nil {
 			return nil, err
 		}
-		samlHandlers = saml.NewHandler(opts.Runner, opts.DeepSource, samlMiddleware, tokenService, opts.Store)
+		samlHandlers = saml.NewHandler(opts.Runner, opts.DeepCode, samlMiddleware, tokenService, opts.Store)
 	}
 
 	// Initialize OAuth factory and handlers
 	oauthFactory := oauth.NewFactory(opts.Apps)
-	oauthHandlers := oauth.NewHandler(opts.Runner, opts.DeepSource, opts.Store, tokenService, oauthFactory)
+	oauthHandlers := oauth.NewHandler(opts.Runner, opts.DeepCode, opts.Store, tokenService, oauthFactory)
 
 	return &Facade{
 		TokenHandlers:     tokenHandlers,
@@ -111,7 +111,7 @@ func (f *Facade) AddRoutes(r Router) Router {
 
 var ErrInvalidToken = httperror.Error{Message: "invalid token"}
 
-func DeepSourceTokenMiddleware(runnerID string, verifier *jwtutil.Verifier) echo.MiddlewareFunc {
+func DeepCodeTokenMiddleware(runnerID string, verifier *jwtutil.Verifier) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			authrorization := c.Request().Header.Get("Authorization")

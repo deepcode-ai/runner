@@ -47,18 +47,18 @@ func TestSyncer_Sync(t *testing.T) {
 		assert.Equal(t, apps, payload.Apps)
 	}))
 
-	runnerHost, _ := url.Parse("https://deepsource.io")
+	runnerHost, _ := url.Parse("https://deepcode.io")
 	runner.Host = *runnerHost
 
-	deepsourceHost, _ := url.Parse(server.URL)
-	deepsource := &DeepSource{
-		Host: *deepsourceHost,
+	deepcodeHost, _ := url.Parse(server.URL)
+	deepcode := &DeepCode{
+		Host: *deepcodeHost,
 	}
 
 	privateKey, _ := rsa.GenerateKey(rand.Reader, 2048)
 	signer := jwtutil.NewSigner(privateKey)
 
-	syncer := New(deepsource, runner, apps, signer, nil)
+	syncer := New(deepcode, runner, apps, signer, nil)
 	err := syncer.Sync()
 	assert.NoError(t, err)
 	server.Close()

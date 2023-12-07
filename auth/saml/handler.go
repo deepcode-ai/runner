@@ -16,16 +16,16 @@ import (
 
 type Handler struct {
 	runner       *model.Runner
-	deepsource   *model.DeepSource
+	deepcode   *model.DeepCode
 	middleware   *samlsp.Middleware
 	tokenService *token.Service
 	store        store.Store
 }
 
-func NewHandler(runner *model.Runner, deepsource *model.DeepSource, middleware *samlsp.Middleware, tokenService *token.Service, store store.Store) *Handler {
+func NewHandler(runner *model.Runner, deepcode *model.DeepCode, middleware *samlsp.Middleware, tokenService *token.Service, store store.Store) *Handler {
 	return &Handler{
 		runner:       runner,
-		deepsource:   deepsource,
+		deepcode:   deepcode,
 		middleware:   middleware,
 		tokenService: tokenService,
 		store:        store,
@@ -157,7 +157,7 @@ func (h *Handler) HandleSession(c echo.Context) error {
 		return c.JSON(400, err.Error())
 	}
 
-	u := h.deepsource.Host.JoinPath("/accounts/runner/apps/saml/login/callback/bifrost/")
+	u := h.deepcode.Host.JoinPath("/accounts/runner/apps/saml/login/callback/bifrost/")
 	q := u.Query()
 	q.Add("app_id", "saml")
 	q.Add("code", code)

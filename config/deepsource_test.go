@@ -8,9 +8,9 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func TestDeepSource_UnmarshalYAML(t *testing.T) {
+func TestDeepCode_UnmarshalYAML(t *testing.T) {
 	input := `
-host: https://deepsource.io
+host: https://deepcode.io
 publicKey: |
   -----BEGIN PUBLIC KEY-----
   MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq9uoCTPIYLfIuUj02YOC
@@ -22,9 +22,9 @@ publicKey: |
   uwIDAQAB
   -----END PUBLIC KEY-----
 `
-	var d DeepSource
+	var d DeepCode
 	err := yaml.Unmarshal([]byte(input), &d)
 	require.NoError(t, err)
-	assert.Equal(t, "https://deepsource.io", d.Host.String())
+	assert.Equal(t, "https://deepcode.io", d.Host.String())
 	assert.NotNil(t, d.PublicKey)
 }

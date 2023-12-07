@@ -48,8 +48,8 @@ runner:
     7dONidHCAyyjLjQzj2VHT6Ph0Hs5PwlCzdHww/Q48HcWKvZy9cqNGAJRQ2p8IlrI
     1lOFqJmY0YtbcBp4Rw/nxEg8qg==
     -----END PRIVATE KEY-----
-deepsource:
-  host: https://deepsource.io
+deepcode:
+  host: https://deepcode.io
   publicKey: |
     -----BEGIN PUBLIC KEY-----
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq9uoCTPIYLfIuUj02YOC

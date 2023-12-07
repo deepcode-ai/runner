@@ -20,16 +20,16 @@ func GetProvider(_ context.Context, c *config.Config, client *http.Client) (*pro
 		WebhookSecret: c.Runner.WebhookSecret,
 	}
 
-	deepsource := &model.DeepSource{
-		Host: c.DeepSource.Host,
+	deepcode := &model.DeepCode{
+		Host: c.DeepCode.Host,
 	}
 
 	appFactory := github.NewAppFactory(githubApps)
 
-	webhookService := github.NewWebhookService(appFactory, runner, deepsource, client)
+	webhookService := github.NewWebhookService(appFactory, runner, deepcode, client)
 	apiService := github.NewAPIService(appFactory, client)
 
-	githubProvider, err := github.NewHandler(webhookService, apiService, appFactory, runner, deepsource, client)
+	githubProvider, err := github.NewHandler(webhookService, apiService, appFactory, runner, deepcode, client)
 	if err != nil {
 		return nil, fmt.Errorf("error initializing provider: %w", err)
 	}

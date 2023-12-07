@@ -1,6 +1,6 @@
 # runner
-DeepSource self-hosted runners.  The power of DeepSource Cloud with the safety of your infrastructure.
-[![DeepSource](https://app.deepsource.com/gh/deepcode-ai/runner.svg/?label=active+issues&show_trend=true&token=Cs-Qwzy6mON1zpyhLBHdzRC_)](https://app.deepsource.com/gh/deepcode-ai/runner/?ref=repository-badge)
+DeepCode self-hosted runners.  The power of DeepCode Cloud with the safety of your infrastructure.
+[![DeepCode](https://app.deepcode.com/gh/deepcode-ai/runner.svg/?label=active+issues&show_trend=true&token=Cs-Qwzy6mON1zpyhLBHdzRC_)](https://app.deepcode.com/gh/deepcode-ai/runner/?ref=repository-badge)
 
 ## Notes:
 

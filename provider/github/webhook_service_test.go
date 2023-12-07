@@ -57,7 +57,7 @@ func TestWebhookService_Process(t *testing.T) {
 			apps: map[string]*App{
 				"test-app-id": app,
 			},
-		}, runner, &model.DeepSource{
+		}, runner, &model.DeepCode{
 			Host: *serverURL,
 		}, http.DefaultClient)
 
@@ -81,12 +81,12 @@ func getWebhookService() *WebhookService {
 	}
 
 	runner := &model.Runner{WebhookSecret: "runner-webhook-secret"}
-	deepsource := &model.DeepSource{Host: *serverURL}
+	deepcode := &model.DeepCode{Host: *serverURL}
 
 	return &WebhookService{
 		appFactory: appFactory,
 		runner:     runner,
-		deepsource: deepsource,
+		deepcode: deepcode,
 	}
 }
 

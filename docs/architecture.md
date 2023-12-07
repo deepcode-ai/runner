@@ -1,9 +1,9 @@
-# Atlas v2.0.0 (DeepSource Enterprise Runner)
+# Atlas v2.0.0 (DeepCode Enterprise Runner)
 
 Atlas v2.0.0 is an application that would be deployed on-premise at our customer's end. There are a few primary technical requirements for this service:
 
 - Source code and other sensitive information must never leave the customer's own infrastructure.
-- Enable a simpler alternative to a full-scale DeepSource Enterprise installation.
+- Enable a simpler alternative to a full-scale DeepCode Enterprise installation.
 
 ## High level architecture
 
@@ -142,9 +142,9 @@ browser->>asgard: get_authentication_url(): runner.xyz.com/auth?client_id=&state
 browser->>runner: GET runner.xyz.com/auth?client_id=
 runner->>VCS: redirect(client_id2, state, redirect_url)
 runner->>runner: oauth2 exchange with VCS
-runner->>VCS: get_profile_info(vcs_token): vishnu@deepsource.io
+runner->>VCS: get_profile_info(vcs_token): vishnu@deepcode.io
 runner->>browser: redirect (runner.xyz.com?access_code=93uy2t) + set_cookie(runner_cookie)
-runner->>browser: redirect (domain.deepsource.com/auth?access_code=93uy2t)
+runner->>browser: redirect (domain.deepcode.com/auth?access_code=93uy2t)
 browser->>asgard: set_token(access_code)
 asgard->>runner: exchange(access_code): token
 asgard->>asgard: generate_asgard_JWT()
@@ -154,7 +154,7 @@ asgard->>browser: set_cookie(JWT)
 
 </div>
 
-As part of the authentication flow, the runner will re-direct to the browser with a SET-COOKIE header, this will set an HTTP_ONLY cookie with the domain as the runners domain like `atlas.acmnecorp.com`. Once this cookie is set, the request will be redirected from the browser to the deepsource.io domain, which will complete the Oauth2 chain and set the DeepSource `JWT` cookie with the `*.deepsource.io` domain.
+As part of the authentication flow, the runner will re-direct to the browser with a SET-COOKIE header, this will set an HTTP_ONLY cookie with the domain as the runners domain like `atlas.acmnecorp.com`. Once this cookie is set, the request will be redirected from the browser to the deepcode.io domain, which will complete the Oauth2 chain and set the DeepCode `JWT` cookie with the `*.deepcode.io` domain.
 
 This approach does not require significant changes in the Oauth2 layer and only requires a new custom backend for runner.
 
@@ -170,13 +170,13 @@ To solve this, two entities are introduced:
 - **Installation:** An installation is the equivalent of an organization. This would identify a single business entity.
 - **App:** This identifies VCS installations that is part of an `Installation`.
 
-In the DeepSource context, the uniqueness constraints of `VCS`+`Login` will move to `Installation`+`App`+`VCS`+`Login`. The feasibility of this and the complexity of accomplishing this is still being worked out.
+In the DeepCode context, the uniqueness constraints of `VCS`+`Login` will move to `Installation`+`App`+`VCS`+`Login`. The feasibility of this and the complexity of accomplishing this is still being worked out.
 
 ---
 
 ### **Autofix Flow**
 
-In the DeepSource cloud architecture, after completing the Autofix run the analyzers publish the patches back to Asgard.
+In the DeepCode cloud architecture, after completing the Autofix run the analyzers publish the patches back to Asgard.
 
 When the user clicks on the "Create Pull Request" button from the dashboard, Asgard processes the patches, then commits them and creates a pull-request using the VCS APIs. But, in the case of runners, Asgard doesn't have access to any of the VCS related credentials to push the data and thus won't able to commit the changes and create pull request.
 

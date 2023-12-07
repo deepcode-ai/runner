@@ -14,8 +14,8 @@ var providers = map[string]string{
 }
 
 func GetSyncer(_ context.Context, c *config.Config, client *http.Client) *sync.Syncer {
-	deepsource := &sync.DeepSource{
-		Host: c.DeepSource.Host,
+	deepcode := &sync.DeepCode{
+		Host: c.DeepCode.Host,
 	}
 	runner := &sync.Runner{
 		ID:            c.Runner.ID,
@@ -35,5 +35,5 @@ func GetSyncer(_ context.Context, c *config.Config, client *http.Client) *sync.S
 	}
 
 	signer := jwtutil.NewSigner(c.Runner.PrivateKey)
-	return sync.New(deepsource, runner, apps, signer, client)
+	return sync.New(deepcode, runner, apps, signer, client)
 }

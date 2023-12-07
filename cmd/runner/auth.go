@@ -33,18 +33,18 @@ func GetAuthentiacator(ctx context.Context, c *config.Config) (*auth.Facade, err
 		PrivateKey:   c.Runner.PrivateKey,
 	}
 
-	deepsource := &model.DeepSource{
-		Host:      c.DeepSource.Host,
-		PublicKey: c.DeepSource.PublicKey,
+	deepcode := &model.DeepCode{
+		Host:      c.DeepCode.Host,
+		PublicKey: c.DeepCode.PublicKey,
 	}
 
 	opts := &auth.Opts{
 		Runner:        runner,
-		DeepSource:    deepsource,
+		DeepCode:    deepcode,
 		Apps:          apps,
 		Store:         store,
 		SAML:          samlOpts,
-		AllowedOrigin: c.DeepSource.Host.String(),
+		AllowedOrigin: c.DeepCode.Host.String(),
 	}
 
 	app, err := auth.New(ctx, opts, http.DefaultClient)
@@ -87,7 +87,7 @@ func setupSAMLOptions(c *config.Config) *saml.Opts {
 		return &saml.Opts{
 			Certificate: c.SAML.Certificate,
 			MetadataURL: c.SAML.MetadataURL,
-			RootURL:     c.DeepSource.Host,
+			RootURL:     c.DeepCode.Host,
 		}
 	}
 	return nil

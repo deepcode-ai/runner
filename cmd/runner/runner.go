@@ -22,7 +22,7 @@ __  /_/ /  / / /_  __ \_  __ \  _ \_  ___/
 _  _, _// /_/ /_  / / /  / / /  __/  /    
 /_/ |_| \__,_/ /_/ /_//_/ /_/\___//_/     
 ------------------------------------------
-By DeepSource | %s
+By DeepCode | %s
 ------------------------------------------`
 )
 
@@ -55,7 +55,7 @@ func NewServer(c *runnerconfig.Config) *Server {
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "time=${time_rfc3339_nano} level=INFO method=${method}, uri=${uri}, status=${status}\n",
 	}))
-	cors := runnermiddleware.CorsMiddleware(c.DeepSource.Host.String())
+	cors := runnermiddleware.CorsMiddleware(c.DeepCode.Host.String())
 	return &Server{Echo: e, Config: c, cors: cors}
 }
 

@@ -15,15 +15,15 @@ import (
 type WebhookService struct {
 	appFactory *AppFactory
 	runner     *model.Runner
-	deepsource *model.DeepSource
+	deepcode *model.DeepCode
 	client     *http.Client
 }
 
-func NewWebhookService(appFactory *AppFactory, runner *model.Runner, deepsource *model.DeepSource, client *http.Client) *WebhookService {
+func NewWebhookService(appFactory *AppFactory, runner *model.Runner, deepcode *model.DeepCode, client *http.Client) *WebhookService {
 	return &WebhookService{
 		appFactory: appFactory,
 		runner:     runner,
-		deepsource: deepsource,
+		deepcode: deepcode,
 		client:     client,
 	}
 }
@@ -64,12 +64,12 @@ func (s *WebhookService) Process(req *WebhookRequest) (*http.Response, error) {
 	f := forwarder.New(s.client)
 
 	res, err := f.Forward(req.HTTPRequest, &forwarder.Opts{
-		TargetURL: *s.deepsource.WebhookURL(),
+		TargetURL: *s.deepcode.WebhookURL(),
 		Headers:   header,
 		Query:     nil,
 	})
 
-	slog.Info("Status code from DeepSource", slog.Int("status_code", res.StatusCode))
+	slog.Info("Status code from DeepCode", slog.Int("status_code", res.StatusCode))
 
 	if err != nil {
 		err := fmt.Errorf("failed to proxy request: %w", err)

@@ -7,12 +7,12 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-type DeepSource struct {
+type DeepCode struct {
 	Host      url.URL
 	PublicKey *rsa.PublicKey
 }
 
-func (d *DeepSource) UnmarshalYAML(unmarshal func(interface{}) error) error {
+func (d *DeepCode) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	type T struct {
 		Host      string `yaml:"host"`
 		PublicKey string `yaml:"publicKey"`

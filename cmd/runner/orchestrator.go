@@ -33,7 +33,7 @@ func GetOrchestrator(_ context.Context, c *config.Config, provider orchestrator.
 	}
 
 	taskOpts := &orchestrator.TaskOpts{
-		RemoteHost:           c.DeepSource.Host.String(),
+		RemoteHost:           c.DeepCode.Host.String(),
 		SnippetStorageType:   c.ObjectStorage.Provider,
 		SnippetStorageBucket: c.ObjectStorage.Bucket,
 		SentryDSN:            c.Sentry.DSN,

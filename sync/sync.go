@@ -20,7 +20,7 @@ type App struct {
 	Provider string `json:"vcs_provider"`
 }
 
-type DeepSource struct {
+type DeepCode struct {
 	Host url.URL
 }
 
@@ -43,18 +43,18 @@ type Payload struct {
 
 type Syncer struct {
 	client     *http.Client
-	deepsource *DeepSource
+	deepcode *DeepCode
 	apps       []App
 	runner     *Runner
 	signer     Signer
 }
 
-func New(deepsource *DeepSource, runner *Runner, apps []App, signer Signer, client *http.Client) *Syncer {
+func New(deepcode *DeepCode, runner *Runner, apps []App, signer Signer, client *http.Client) *Syncer {
 	if client == nil {
 		client = http.DefaultClient
 	}
 
-	return &Syncer{client: client, runner: runner, deepsource: deepsource, apps: apps, signer: signer}
+	return &Syncer{client: client, runner: runner, deepcode: deepcode, apps: apps, signer: signer}
 }
 
 func (s *Syncer) Sync() error {
@@ -69,18 +69,18 @@ func (s *Syncer) Sync() error {
 
 	data, err := json.Marshal(payload)
 	if err != nil {
-		return fmt.Errorf("failed to sync to DeepSource: %w", err)
+		return fmt.Errorf("failed to sync to DeepCode: %w", err)
 	}
 
-	target := s.deepsource.Host.JoinPath("/api/runner/").String()
+	target := s.deepcode.Host.JoinPath("/api/runner/").String()
 	request, err := http.NewRequest(http.MethodPut, target, bytes.NewReader(data))
 	if err != nil {
-		return fmt.Errorf("failed to sync to DeepSource: %w", err)
+		return fmt.Errorf("failed to sync to DeepCode: %w", err)
 	}
 
 	token, err := s.signer.GenerateToken(s.runner.ID, []string{"sync"}, nil, 5*time.Minute)
 	if err != nil {
-		return fmt.Errorf("failed to sync to DeepSource: %w", err)
+		return fmt.Errorf("failed to sync to DeepCode: %w", err)
 	}
 
 	request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
@@ -89,15 +89,15 @@ func (s *Syncer) Sync() error {
 
 	response, err := s.client.Do(request)
 	if err != nil {
-		return fmt.Errorf("failed to sync to DeepSource: %w", err)
+		return fmt.Errorf("failed to sync to DeepCode: %w", err)
 	}
 
 	if !(response.StatusCode == http.StatusOK || response.StatusCode == http.StatusCreated) {
 		body, err := io.ReadAll(response.Body)
 		if err != nil {
-			return fmt.Errorf("failed to sync to DeepSource: %w", err)
+			return fmt.Errorf("failed to sync to DeepCode: %w", err)
 		}
-		return fmt.Errorf("failed to sync to DeepSource: code=%d, body=%s", response.StatusCode, string(body))
+		return fmt.Errorf("failed to sync to DeepCode: code=%d, body=%s", response.StatusCode, string(body))
 	}
 
 	return response.Body.Close()

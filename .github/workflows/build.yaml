@@ -34,7 +34,7 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags/v')
         run: |
           echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "REPO=deepsource-production" >> $GITHUB_ENV
+          echo "REPO=deepcode-production" >> $GITHUB_ENV
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

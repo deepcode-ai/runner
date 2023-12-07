@@ -5,7 +5,7 @@ import (
 	"net/url"
 )
 
-type DeepSource struct {
+type DeepCode struct {
 	Host      url.URL
 	PublicKey *rsa.PublicKey
 }

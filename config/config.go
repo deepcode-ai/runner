@@ -9,7 +9,7 @@ import (
 
 type Config struct {
 	Runner        *Runner        `yaml:"runner"`
-	DeepSource    *DeepSource    `yaml:"deepsource"`
+	DeepCode    *DeepCode    `yaml:"deepcode"`
 	Apps          []*App         `yaml:"apps"`
 	Kubernetes    *Kubernetes    `yaml:"kubernetes"`
 	RQLite        *RQLite        `yaml:"rqlite"`

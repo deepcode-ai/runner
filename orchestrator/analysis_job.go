@@ -26,7 +26,7 @@ type AnalysisDriverJob struct {
 	run                   *artifact.AnalysisRun
 	check                 *artifact.Check
 	analysisConfigBytes   []byte
-	deepsourceConfigBytes []byte
+	deepcodeConfigBytes []byte
 
 	opts *AnalysisOpts
 }
@@ -49,7 +49,7 @@ func NewAnalysisDriverJob(run *artifact.AnalysisRun, check artifact.Check, opts 
 		return nil, err
 	}
 
-	deepsourceConfigBytes, err := json.Marshal(run.Config)
+	deepcodeConfigBytes, err := json.Marshal(run.Config)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func NewAnalysisDriverJob(run *artifact.AnalysisRun, check artifact.Check, opts 
 		run:                   run,
 		check:                 &check,
 		analysisConfigBytes:   analysisConfigBytes,
-		deepsourceConfigBytes: deepsourceConfigBytes,
+		deepcodeConfigBytes: deepcodeConfigBytes,
 		opts:                  opts,
 	}, nil
 }
@@ -121,7 +121,7 @@ func (j *AnalysisDriverJob) Container() *Container {
 					MarvinModeAnalyze,
 					fmt.Sprintf("'%s'", string(j.analysisConfigBytes)),
 					MarvinCmdArgConfig,
-					fmt.Sprintf("'%s'", string(j.deepsourceConfigBytes)),
+					fmt.Sprintf("'%s'", string(j.deepcodeConfigBytes)),
 					MarvinSnippetStorageType,
 					j.opts.SnippetStorageType,
 					MarvinSnippetStorageBucket,

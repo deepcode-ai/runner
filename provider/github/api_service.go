@@ -35,7 +35,7 @@ func (s *APIService) Process(req *APIRequest) (*http.Response, error) {
 		return nil, httperror.ErrUnknown(err)
 	}
 
-	// Remove the DeepSource authorization header if present
+	// Remove the DeepCode authorization header if present
 	req.HTTPRequest.Header.Del(HeaderAuthorization)
 
 	// add extra headers for GitHub API request.  If empty, set "Accept" to "application/vnd.github+json"

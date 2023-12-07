@@ -12,7 +12,7 @@ import (
 type TransformerJob struct {
 	run                    *artifact.TransformerRun
 	transformerConfigBytes []byte
-	deepsourceConfigBytes  []byte
+	deepcodeConfigBytes  []byte
 
 	opts *TransformerOpts
 }
@@ -33,7 +33,7 @@ func NewTransformerJob(run *artifact.TransformerRun, opts *TransformerOpts) (Job
 		return nil, err
 	}
 
-	deepsourceConfigBytes, err := json.Marshal(run.Config)
+	deepcodeConfigBytes, err := json.Marshal(run.Config)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func NewTransformerJob(run *artifact.TransformerRun, opts *TransformerOpts) (Job
 	return &TransformerJob{
 		run:                    run,
 		transformerConfigBytes: transformerConfigBytes,
-		deepsourceConfigBytes:  deepsourceConfigBytes,
+		deepcodeConfigBytes:  deepcodeConfigBytes,
 		opts:                   opts,
 	}, nil
 }
@@ -137,7 +137,7 @@ func (j *TransformerJob) Container() *Container {
 					MarvinModeTransform,
 					fmt.Sprintf("'%s'", string(j.transformerConfigBytes)),
 					MarvinCmdArgConfig,
-					fmt.Sprintf("'%s'", string(j.deepsourceConfigBytes)),
+					fmt.Sprintf("'%s'", string(j.deepcodeConfigBytes)),
 				}, " "),
 		},
 		Env: map[string]string{

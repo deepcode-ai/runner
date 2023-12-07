@@ -27,7 +27,7 @@ func NewHandler(
 	apiService *APIService,
 	appFactory *AppFactory,
 	_ *model.Runner,
-	_ *model.DeepSource,
+	_ *model.DeepCode,
 	httpClient *http.Client) (*Handler, error) {
 	return &Handler{
 		apiService:     apiService,
@@ -53,7 +53,7 @@ func (h *Handler) HandleAPI(c echo.Context) error {
 	return h.writeResponse(c, res)
 }
 
-// HandleWebhook handles the webhook request from Github to DeepSource Cloud.
+// HandleWebhook handles the webhook request from Github to DeepCode Cloud.
 func (h *Handler) HandleWebhook(c echo.Context) error {
 	req, err := NewWebhookRequest(c)
 	if err != nil {

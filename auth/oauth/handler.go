@@ -19,7 +19,7 @@ import (
 
 type Handler struct {
 	runner     *model.Runner
-	deepsource *model.DeepSource
+	deepcode *model.DeepCode
 	factory    *Factory
 	store      store.Store
 
@@ -28,10 +28,10 @@ type Handler struct {
 
 var ErrInvalidClientCredentials = errors.New("invalid client credentials")
 
-func NewHandler(runner *model.Runner, deepsource *model.DeepSource, store store.Store, tokenService *token.Service, factory *Factory) *Handler {
+func NewHandler(runner *model.Runner, deepcode *model.DeepCode, store store.Store, tokenService *token.Service, factory *Factory) *Handler {
 	return &Handler{
 		runner:     runner,
-		deepsource: deepsource,
+		deepcode: deepcode,
 		factory:    factory,
 		store:      store,
 
@@ -178,8 +178,8 @@ func (h *Handler) HandleSession(c echo.Context) error {
 		return httperror.ErrUnknown(err)
 	}
 
-	// Redirect back to DeepSource as the authorization callback with the code.
-	u := h.deepsource.Host.JoinPath(fmt.Sprintf("/accounts/runner/apps/%s/login/callback/bifrost/", req.AppID))
+	// Redirect back to DeepCode as the authorization callback with the code.
+	u := h.deepcode.Host.JoinPath(fmt.Sprintf("/accounts/runner/apps/%s/login/callback/bifrost/", req.AppID))
 	q := u.Query()
 	q.Add("app_id", req.AppID)
 	q.Add("code", code)

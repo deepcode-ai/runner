@@ -74,7 +74,7 @@ func (c *InstallationClient) AccessToken() (string, error) {
 	return accessTokenResponse.Token, nil
 }
 
-// ProxyURL returns the URL to proxy the request.  When DeepSource Cloud sends a
+// ProxyURL returns the URL to proxy the request.  When DeepCode Cloud sends a
 // request to GitHub via the Runner, it is prefixed with "/apps/:app_id/api".
 // This method strips this prefix and generates the actual GitHub API URL.
 func (c *InstallationClient) ProxyURL(path string) *url.URL {

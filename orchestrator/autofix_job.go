@@ -16,7 +16,7 @@ const (
 type AutofixDriverJob struct {
 	run                   *artifact.AutofixRun
 	autofixConfigBytes    []byte
-	deepsourceConfigBytes []byte
+	deepcodeConfigBytes []byte
 
 	opts *AutofixOpts
 }
@@ -42,14 +42,14 @@ func NewAutofixDriverJob(run *artifact.AutofixRun, opts *AutofixOpts) (JobCreato
 		return nil, err
 	}
 
-	deepsourceConfigBytes, err := json.Marshal(run.Config)
+	deepcodeConfigBytes, err := json.Marshal(run.Config)
 	if err != nil {
 		return nil, err
 	}
 	return &AutofixDriverJob{
 		run:                   run,
 		autofixConfigBytes:    autofixConfigBytes,
-		deepsourceConfigBytes: deepsourceConfigBytes,
+		deepcodeConfigBytes: deepcodeConfigBytes,
 
 		opts: opts,
 	}, nil
@@ -149,7 +149,7 @@ func (j *AutofixDriverJob) Container() *Container {
 					MarvinModeAutofix,
 					fmt.Sprintf("'%s'", string(j.autofixConfigBytes)),
 					MarvinCmdArgConfig,
-					fmt.Sprintf("'%s'", string(j.deepsourceConfigBytes)),
+					fmt.Sprintf("'%s'", string(j.deepcodeConfigBytes)),
 					MarvinSnippetStorageType,
 					j.opts.SnippetStorageType,
 					MarvinSnippetStorageBucket,

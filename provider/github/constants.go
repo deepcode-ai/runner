@@ -7,9 +7,9 @@ import (
 
 const (
 	HeaderGithubSignature = "x-hub-signature-256"
-	HeaderRunnerSignature = "x-deepsource-signature-256"
-	HeaderRunnerID        = "x-deepsource-runner-id"
-	HeaderAppID           = "x-deepsource-app-id"
+	HeaderRunnerSignature = "x-deepcode-signature-256"
+	HeaderRunnerID        = "x-deepcode-runner-id"
+	HeaderAppID           = "x-deepcode-app-id"
 	HeaderInstallationID  = "X-Installation-Id"
 
 	HeaderContentType    = "Content-Type"
